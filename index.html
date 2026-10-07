@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorry ya!</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;500&display=swap');
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background: url('1000390566.jpg') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #ffffff;
+            overflow: hidden;
+        }
+        .overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(30, 25, 20, 0.5);
+            z-index: -1;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            padding: 40px 30px;
+            text-align: center;
+            max-width: 320px;
+            width: 85%;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            position: relative;
+        }
+
+        h2 {
+            font-weight: 500;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        p {
+            font-weight: 300;
+            font-size: 0.95rem;
+            margin-bottom: 30px;
+            opacity: 0.85;
+            line-height: 1.6;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            position: relative;
+            height: 40px;
+        }
+
+        button {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            padding: 10px 24px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .btn-yes {
+            background: #ffffff;
+            color: #222222;
+            border: none;
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+            position: absolute;
+            left: 50%;
+            transform: translateX(-110%);
+        }
+
+        .btn-yes:hover {
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.3);
+        }
+        
+        .btn-no {
+            background: transparent;
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            position: absolute;
+            left: 50%;
+            transform: translateX(10%);
+        }
+
+        #btn-no {
+            transition: all 0.1s ease-out;
+        }
+
+        #page2 {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay"></div>
+    
+    <div class="card" id="page1">
+        <h2>Maafin aku ya?</h2>
+        <p>Sorry banget belum bisa bantu crimping di ruang jurnalis</p>
+        <div class="btn-group">
+            <button class="btn-yes" onclick="nextPage()">Iya, dimaafin</button>
+            <button class="btn-no" id="btn-no" onmouseover="moveButton()" ontouchstart="moveButton()">GAMAU</button>
+        </div>
+    </div>
+
+    <div class="card" id="page2">
+        <h2>Thank You!</h2>
+        <p>beneran kalo free langsung aku chat!</p>
+        <button class="btn-yes" style="position: relative; left: 0; transform: none;" onclick="sendWhatsApp()">Chat Aku</button>
+    </div>
+    
+    <script>
+        const btnNo = document.getElementById('btn-no');
+        const textMeleset = ["Eh, maafin dong", "Yakin masih ngambek?", "Ayolah...", "Plisss dimaafin", "Jangan ngambek terus"];
+
+        function moveButton() {
+            const card = document.getElementById('page1');
+            const cardRect = card.getBoundingClientRect();
+            
+            btnNo.style.position = 'fixed';
+            btnNo.style.transform = 'none';
+            const maxX = cardRect.width - btnNo.offsetWidth - 20; 
+            const maxY = cardRect.height - btnNo.offsetHeight - 20; 
+            
+            
+            const x = cardRect.left + 10 + (Math.random() * maxX);
+            const y = cardRect.top + 10 + (Math.random() * maxY);
+            
+            btnNo.style.left = `${x}px`;
+            btnNo.style.top = `${y}px`;
+            btnNo.innerText = textMeleset[Math.floor(Math.random() * textMeleset.length)];
+        }
+
+        function nextPage() {
+            document.getElementById('page1').style.display = 'none';
+            btnNo.style.display = 'none'; 
+            document.getElementById('page2').style.display = 'block';
+        }
+
+        function sendWhatsApp() {
+            const noWa = "6287758089260"; 
+            const textWa = encodeURIComponent("iyaa aku maafin");
+            
+            
+            if(noWa !== "") {
+                window.location.href = `https://wa.me/${noWa}?text=${textWa}`;
+            } else {
+                alert("Wah, nomor WhatsApp-nya belum diisi nih di kode HTML-nya!");
+            }
+        }
+    </script>
+</body>
+</html>
